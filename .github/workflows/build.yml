@@ -39,6 +39,16 @@ jobs:
       with:
         name: e-book PDF (Arch Linux)
         path: controls-engineering-in-frc-ebook.pdf
+    - uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      if: |
+        github.repository_owner == 'calcmogul' &&
+        github.ref == 'refs/heads/main'
+    - run: make upload
+      if: |
+        github.repository_owner == 'calcmogul' &&
+        github.ref == 'refs/heads/main'
   macos:
     runs-on: macos-latest
     timeout-minutes: 15
